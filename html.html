@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Civics Quiz: Preventive Care & Maintenance Culture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e9f5f0 0%, #d0e6db 100%);
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 2rem 1rem;
+            color: #1a2e2c;
+        }
+
+        .quiz-container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: #ffffffdd;
+            backdrop-filter: blur(2px);
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 32, 28, 0.35);
+            overflow: hidden;
+            border: 1px solid #b7d7cb;
+        }
+
+        /* header section */
+        .quiz-header {
+            background: #1e4a4b;
+            color: white;
+            padding: 1.8rem 2rem;
+            text-align: center;
+        }
+
+        .quiz-header h1 {
+            font-size: 1.9rem;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .quiz-header h1 span {
+            background: #f7c35c;
+            font-size: 1.4rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 60px;
+            color: #1e4a4b;
+        }
+
+        .sub {
+            margin-top: 0.6rem;
+            opacity: 0.85;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        /* progress & stats */
+        .quiz-stats {
+            display: flex;
+            justify-content: space-between;
+            background: #fef9e6;
+            padding: 0.8rem 2rem;
+            border-bottom: 1px solid #cfe3db;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #2c5f5a;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* questions area */
+        .question-area {
+            padding: 2rem 2rem 1rem 2rem;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 1.8rem;
+            color: #173e3b;
+            border-left: 6px solid #f7b05e;
+            padding-left: 1.2rem;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #cbe6df;
+            border-radius: 1.8rem;
+            padding: 0.9rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .option:hover {
+            background: #eef7f3;
+            border-color: #7eb6aa;
+            transform: scale(0.99);
+        }
+
+        .option.selected {
+            background: #e0f0ea;
+            border-color: #1e7a6e;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+        }
+
+        .option-letter {
+            width: 36px;
+            height: 36px;
+            background: #e7f0ed;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #1e5e58;
+            font-size: 1.1rem;
+        }
+
+        .option.selected .option-letter {
+            background: #1e7a6e;
+            color: white;
+        }
+
+        /* navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 1rem 0 1.5rem;
+        }
+
+        button {
+            background: #f2f2f2;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            color: #2c5f5a;
+            border: 1px solid #cbdcd6;
+        }
+
+        button.primary {
+            background: #1e6b64;
+            color: white;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        button.primary:hover {
+            background: #0f534d;
+            transform: scale(0.97);
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        .submit-area {
+            text-align: center;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .submit-btn {
+            background: #f4a261;
+            color: #2a3b38;
+            font-size: 1.2rem;
+            padding: 0.8rem 2.5rem;
+            box-shadow: 0 6px 0 #c46d2e;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #c46d2e;
+        }
+
+        /* result card */
+        .result-card {
+            margin: 1.5rem 2rem 2rem;
+            background: #faf5e8;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 5px solid #f7b05e;
+        }
+
+        .score-circle {
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: #1e6b64;
+            color: white;
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border-radius: 60px;
+            margin: 0.5rem 0;
+        }
+
+        .feedback-msg {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .review-list {
+            text-align: left;
+            margin-top: 1.2rem;
+            max-height: 280px;
+            overflow-y: auto;
+            background: #ffffffaa;
+            border-radius: 1.2rem;
+            padding: 0.8rem;
+        }
+
+        .review-item {
+            padding: 0.6rem;
+            border-bottom: 1px solid #e2dccd;
+            font-size: 0.85rem;
+        }
+
+        .review-correct {
+            color: #2a7a4b;
+            font-weight: bold;
+        }
+
+        .review-wrong {
+            color: #bc4e2c;
+            font-weight: bold;
+        }
+
+        .reset-btn {
+            background: #e0cfb1;
+            margin-top: 1rem;
+            padding: 0.5rem 1.8rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 0.75rem;
+            color: #426f6a;
+            border-top: 1px solid #cfe3db;
+        }
+
+        @media (max-width: 650px) {
+            .quiz-header h1 { font-size: 1.4rem; }
+            .question-text { font-size: 1.2rem; }
+            .option { font-size: 0.9rem; padding: 0.7rem 1rem; }
+            .quiz-stats { flex-direction: column; align-items: center; }
+            .nav-buttons button { padding: 0.5rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="quiz-container" id="quizRoot">
+    <div class="quiz-header">
+        <h1>🏛️ Civics & Well-being <span>Preventive Care Culture</span></h1>
+        <div class="sub">Importance · Obstacles · Collective Maintenance</div>
+    </div>
+    <div class="quiz-stats" id="statsPanel">
+        <span>📋 Question <span id="currentQNumber">1</span> / <span id="totalQ">20</span></span>
+        <span>✅ Answered: <span id="answeredCount">0</span> / 20</span>
+        <span>⭐ Score: <span id="liveScore">0</span></span>
+    </div>
+    <div id="dynamicContent">
+        <!-- question area gets injected by js -->
+    </div>
+    <footer>
+        🌱 "A culture of prevention saves lives, resources, and strengthens civic responsibility."
+    </footer>
+</div>
+
+<script>
+    // ---------- 20 Questions: Civics topic on Preventive Care & Maintenance Culture (importance & obstacles) ----------
+    const QUESTIONS = [
+        { text: "What does 'preventive care' in a civic context primarily refer to?", options: ["Treating diseases after severe symptoms appear", "Regular health check-ups, vaccinations & maintenance to avoid crises", "Emergency hospital response only", "Punitive health regulations"], correct: 1, explanation: "Preventive care focuses on proactive measures like screenings and maintenance to avoid severe issues." },
+        { text: "Which of the following is a key importance of a strong preventive maintenance culture in public infrastructure?", options: ["It increases long-term repair costs", "It reduces sudden failures and enhances safety", "It only benefits private companies", "It eliminates all need for emergency services"], correct: 1, explanation: "Regular maintenance prevents catastrophic breakdowns, saves money and ensures public safety." },
+        { text: "Which obstacle commonly hinders preventive healthcare adoption in communities?", options: ["Widespread awareness and education", "High out-of-pocket costs & lack of insurance coverage", "Excessive government funding", "Too many free clinics"], correct: 1, explanation: "Financial barriers and accessibility issues remain major obstacles to preventive care." },
+        { text: "A civic culture of preventive maintenance includes:", options: ["Ignoring minor wear in public roads", "Scheduled inspections of water systems and bridges", "Waiting for lawsuits before repairs", "Privatizing all maintenance without oversight"], correct: 1, explanation: "Regular inspections & scheduled upkeep are pillars of preventive civic maintenance." },
+        { text: "Why is preventive care considered a civic virtue?", options: ["Because it reduces collective risks & fosters shared responsibility", "It only benefits individuals", "It increases burden on hospitals", "It eliminates personal freedoms"], correct: 0, explanation: "When citizens adopt prevention, it lowers public health burdens and strengthens community resilience." },
+        { text: "Which obstacle is psychological or cultural regarding preventive maintenance at home?", options: ["Lack of technical knowledge", "Procrastination & 'it won't happen to me' mindset", "Too many government incentives", "Extreme weather"], correct: 1, explanation: "Cultural inertia and the optimism bias often delay routine maintenance and checkups." },
+        { text: "What is a major obstacle for governments to implement preventive maintenance in public assets?", options: ["Short-term budget cycles & political pressure for visible spending", "Excess of skilled engineers", "Overabundance of long-term planning", "Citizens demanding only reactive care"], correct: 0, explanation: "Politicians often prefer visible projects over preventive upkeep, leading to deferred maintenance." },
+        { text: "How does a preventive care culture impact economic productivity?", options: ["It reduces sick days & equipment downtime", "It has no effect on economy", "It only increases medical spending", "It lowers lifespan"], correct: 0, explanation: "Prevention lowers absenteeism, reduces major repairs, and boosts overall productivity." },
+        { text: "Which of the following is an example of community-based preventive maintenance?", options: ["Volunteer neighborhood drain cleaning before monsoons", "Waiting for a flood disaster", "Relying solely on national army", "Banning all construction"], correct: 0, explanation: "Proactive community actions like cleaning drainage prevent larger calamities." },
+        { text: "What is a typical obstacle for individuals to maintain regular dental or medical checkups?", options: ["Free transportation services", "Time constraints & competing priorities", "Excellent public awareness campaigns", "Low cost of services"], correct: 1, explanation: "Busy schedules and lack of paid time off often prevent routine preventive visits." },
+        { text: "Why do many public school buildings suffer from poor maintenance, representing a civic failure?", options: ["Deferred maintenance due to insufficient funding and prioritization", "Overqualified staff", "Too many maintenance inspections", "Excessive community engagement"], correct: 0, explanation: "Chronic underfunding and short-sighted budgets lead to deterioration of educational infrastructure." },
+        { text: "Which phrase best describes 'culture of maintenance'?", options: ["Reactive fixes only after breakdown", "Shared norms, habits, and values that prioritize regular care and early action", "Individual responsibility without community support", "Government authoritarian orders"], correct: 1, explanation: "It's about collective habits and attitudes that embed preventive action in daily life." },
+        { text: "Which obstacle is related to information asymmetry in preventive health?", options: ["People not knowing when to screen or what services are free", "Too many doctors", "Excellent digital health records", "High community trust"], correct: 0, explanation: "Lack of clear, accessible information prevents uptake of preventive measures." },
+        { text: "What is a major obstacle for preventive environmental maintenance (e.g., waste management)?", options: ["High civic sense and participation", "Illegal dumping and low enforcement of regulations", "Effective recycling plants everywhere", "Overly strict environmental laws"], correct: 1, explanation: "Weak enforcement and free-riding behavior obstruct preventive environmental care." },
+        { text: "Why is preventive care for chronic diseases (diabetes, hypertension) vital for civic health?", options: ["It reduces long-term healthcare costs and prevents disability", "It increases hospital admissions", "It has no effect on public budget", "It only helps pharmaceutical companies"], correct: 0, explanation: "Prevention drastically cuts expensive treatments and improves quality of life across populations." },
+        { text: "Which obstacle do low-income communities face most regarding preventive dental care?", options: ["Lack of fluoridated water or affordable clinics", "Too many mobile dental vans", "Excess of preventive programs", "Mandatory insurance coverage"], correct: 0, explanation: "Access to affordable preventive oral care remains a barrier, including geographic and financial gaps." },
+        { text: "How does civic education promote preventive maintenance culture?", options: ["By spreading awareness and teaching practical skills from early age", "By ignoring community engagement", "By forcing expensive penalties", "By banning private maintenance"], correct: 0, explanation: "Education fosters long-term behavioral change, making prevention a shared social norm." },
+        { text: "What is a common institutional obstacle to preventive infrastructure maintenance in many cities?", options: ["Corruption and lack of transparent asset management", "Excessive community oversight", "Highly skilled public workforce", "Well funded reserve accounts"], correct: 0, explanation: "Corruption diverts funds meant for routine maintenance, leading to decay and hazards." },
+        { text: "Which statement reflects the importance of 'preventive mental health care' in civic culture?", options: ["Early stress management and access to counseling reduces societal burdens", "Mental health cannot be prevented", "Only medication matters", "It increases stigma"], correct: 0, explanation: "Proactive mental wellness prevents crises, boosts productivity, and strengthens communities." },
+        { text: "What final lesson about obstacles faced in preventive culture can strengthen civic responsibility?", options: ["Acknowledging barriers (cost, awareness, inertia) and designing inclusive, community-led solutions", "Blaming only individuals for negligence", "Removing all maintenance duties from government", "Privatizing all preventive services"], correct: 0, explanation: "Recognizing obstacles allows targeted policies and collective action to build a resilient preventive culture." }
+    ];
+
+    // total 20 questions verified
+    const TOTAL_QS = QUESTIONS.length; // =20
+
+    // state
+    let userAnswers = new Array(TOTAL_QS).fill(null);   // stores index (0-based) of selected option
+    let quizSubmitted = false;
+    let currentIndex = 0;   // 0-indexed
+
+    // DOM elements
+    const dynamicContainer = document.getElementById("dynamicContent");
+    const statsCurrentQ = document.getElementById("currentQNumber");
+    const totalQSpan = document.getElementById("totalQ");
+    const answeredCountSpan = document.getElementById("answeredCount");
+    const liveScoreSpan = document.getElementById("liveScore");
+
+    // Helper: update stats (answered count, live score if submitted? we show calculated score only after submission, or show in-progress correct answers? but we show only answered / total. Score appears only after final submit.
+    // while answering, we can show number of answered questions, final submit will compute score. For liveScoreSpan we show 0 until final, or maybe number of answered? but better keep "score: 0" until final.
+    // on final submission we update result panel. For consistency, we won't update live score before submission.
+    function updateStats() {
+        const answered = userAnswers.filter(a => a !== null).length;
+        answeredCountSpan.innerText = answered;
+        // liveScoreSpan not updated until final; keep as 0, but we can change after final. we'll not change here.
+    }
+
+    function updateNavAndRender() {
+        renderCurrentQuestion();
+        updateStats();
+        statsCurrentQ.innerText = currentIndex+1;
+        totalQSpan.innerText = TOTAL_QS;
+    }
+
+    function renderCurrentQuestion() {
+        if (quizSubmitted) {
+            // if submitted, we should display results instead of questions? we'll handle inside render method condition
+            renderFullResults();
+            return;
+        }
+        const q = QUESTIONS[currentIndex];
+        const selectedIdx = userAnswers[currentIndex];
+        const optionsHtml = q.options.map((opt, idx) => {
+            const letter = String.fromCharCode(65+idx); // A,B,C,D
+            const isSelected = (selectedIdx === idx);
+            const selectedClass = isSelected ? 'selected' : '';
+            return `
+                <div class="option ${selectedClass}" data-opt-index="${idx}">
+                    <div class="option-letter">${letter}</div>
+                    <div class="option-text">${escapeHtml(opt)}</div>
+                </div>
+            `;
+        }).join('');
+
+        const html = `
+            <div class="question-area">
+                <div class="question-text">${escapeHtml(q.text)}</div>
+                <div class="options-list" id="optionsList">
+                    ${optionsHtml}
+                </div>
+                <div class="nav-buttons">
+                    <button id="prevBtn" ${currentIndex === 0 ? 'disabled style="opacity:0.5"' : ''}>◀ Previous</button>
+                    <button id="nextBtn" ${currentIndex === TOTAL_QS-1 ? 'disabled style="opacity:0.5"' : ''}>Next ▶</button>
+                </div>
+                <div class="submit-area">
+                    <button id="finalSubmitBtn" class="submit-btn primary">✅ SUBMIT QUIZ & SEE RESULTS</button>
+                </div>
+            </div>
+        `;
+        dynamicContainer.innerHTML = html;
+
+        // attach option listeners
+        const optionsDivs = document.querySelectorAll('.option');
+        optionsDivs.forEach(optDiv => {
+            optDiv.addEventListener('click', (e) => {
+                if (quizSubmitted) return;
+                const idx = parseInt(optDiv.dataset.optIndex);
+                // update answer for current question
+                userAnswers[currentIndex] = idx;
+                updateStats();
+                renderCurrentQuestion(); // re-render to reflect selection
+            });
+        });
+
+        // prev/next buttons
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        if (prevBtn) prevBtn.addEventListener('click', () => {
+            if (quizSubmitted) return;
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateNavAndRender();
+            }
+        });
+        if (nextBtn) nextBtn.addEventListener('click', () => {
+            if (quizSubmitted) return;
+            if (currentIndex < TOTAL_QS-1) {
+                currentIndex++;
+                updateNavAndRender();
+            }
+        });
+
+        const submitBtn = document.getElementById('finalSubmitBtn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', () => {
+                if (quizSubmitted) return;
+                finalizeQuiz();
+            });
+        }
+    }
+
+    function finalizeQuiz() {
+        // calculate score & show full results with review
+        quizSubmitted = true;
+        let correctCount = 0;
+        const detailedResults = [];
+        for (let i = 0; i < TOTAL_QS; i++) {
+            const selected = userAnswers[i];
+            const isCorrect = (selected !== null && selected === QUESTIONS[i].correct);
+            if (isCorrect) correctCount++;
+            detailedResults.push({
+                questionText: QUESTIONS[i].text,
+                selectedIdx: selected,
+                correctIdx: QUESTIONS[i].correct,
+                isCorrect: isCorrect,
+                explanation: QUESTIONS[i].explanation,
+                options: QUESTIONS[i].options
+            });
+        }
+        const scorePercent = Math.round((correctCount / TOTAL_QS) * 100);
+        renderFullResults(correctCount, scorePercent, detailedResults);
+    }
+
+    function renderFullResults(correctCount = null, scorePercent = null, detailed = null) {
+        if (!quizSubmitted) return;
+        // if arguments not passed (direct call), compute again
+        let finalCorrect = correctCount;
+        let finalPercent = scorePercent;
+        let finalDetails = detailed;
+        if (finalCorrect === null) {
+            finalCorrect = 0;
+            finalDetails = [];
+            for (let i = 0; i < TOTAL_QS; i++) {
+                const selected = userAnswers[i];
+                const isCor = (selected !== null && selected === QUESTIONS[i].correct);
+                if (isCor) finalCorrect++;
+                finalDetails.push({
+                    questionText: QUESTIONS[i].text,
+                    selectedIdx: selected,
+                    correctIdx: QUESTIONS[i].correct,
+                    isCorrect: isCor,
+                    explanation: QUESTIONS[i].explanation,
+                    options: QUESTIONS[i].options
+                });
+            }
+            finalPercent = Math.round((finalCorrect / TOTAL_QS) * 100);
+        }
+
+        let feedbackMsg = "";
+        if (finalPercent >= 80) feedbackMsg = "🌟 Excellent civic awareness! You embrace preventive culture.";
+        else if (finalPercent >= 60) feedbackMsg = "👍 Good understanding, but more can be done to overcome obstacles.";
+        else if (finalPercent >= 40) feedbackMsg = "📘 Room to grow: learn more about importance and barriers to prevention.";
+        else feedbackMsg = "🌱 Start exploring preventive care! Small steps build a resilient community.";
+
+        const reviewItems = finalDetails.map((item, idx) => {
+            const userLetter = (item.selectedIdx !== null) ? String.fromCharCode(65+item.selectedIdx) : "—";
+            const correctLetter = String.fromCharCode(65+item.correctIdx);
+            const statusClass = item.isCorrect ? "review-correct" : "review-wrong";
+            const statusSymbol = item.isCorrect ? "✓" : "✗";
+            let correctAnswerText = item.options[item.correctIdx];
+            return `
+                <div class="review-item">
+                    <strong>Q${idx+1}: ${escapeHtml(item.questionText)}</strong><br>
+                    <span class="${statusClass}">${statusSymbol} Your answer: ${userLetter} ${item.selectedIdx !== null ? escapeHtml(item.options[item.selectedIdx]) : "Not answered"}</span><br>
+                    <span>✅ Correct: ${correctLetter} ${escapeHtml(correctAnswerText)}</span><br>
+                    <span style="font-size:0.75rem; color:#5e6b66;">💡 ${escapeHtml(item.explanation)}</span>
+                </div>
+            `;
+        }).join('');
+
+        const resultHtml = `
+            <div class="result-card">
+                <div class="score-circle">${finalCorrect}/${TOTAL_QS} (${finalPercent}%)</div>
+                <div class="feedback-msg">${feedbackMsg}</div>
+                <div class="review-list">
+                    <h4 style="margin-bottom:10px;">📋 Detailed Review & Civic Lessons</h4>
+                    ${reviewItems}
+                </div>
+                <button id="resetQuizBtn" class="reset-btn primary">⟳ TAKE QUIZ AGAIN</button>
+            </div>
+        `;
+
+        // Also display simple placeholder maybe
+        dynamicContainer.innerHTML = resultHtml;
+        const resetBtn = document.getElementById('resetQuizBtn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                // reset everything
+                userAnswers = new Array(TOTAL_QS).fill(null);
+                quizSubmitted = false;
+                currentIndex = 0;
+                updateStats();
+                // reset live score display back to 0
+                liveScoreSpan.innerText = "0";
+                answeredCountSpan.innerText = "0";
+                renderCurrentQuestion();
+            });
+        }
+    }
+
+    // utility to escape html to avoid injection
+    function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+
+    // initial render
+    function init() {
+        totalQSpan.innerText = TOTAL_QS;
+        answeredCountSpan.innerText = "0";
+        liveScoreSpan.innerText = "0";
+        quizSubmitted = false;
+        userAnswers.fill(null);
+        currentIndex = 0;
+        renderCurrentQuestion();
+    }
+
+    init();
+</script>
+</body>
+</html>
